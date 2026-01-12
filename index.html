@@ -183,8 +183,9 @@ button{
 <div class="lightning"></div>
 
 <!-- AUDIO MP3 -->
-<audio id="audio" loop>
-  <source src="musica.mp3" type="audio/mpeg">
+<audio id="audio" loop preload="auto" playsinline>
+  <source src="./musica.mp3" type="audio/mpeg">
+  Tu navegador no soporta audio.
 </audio>
 
 <!-- ACTIVAR MUSICA -->
@@ -221,15 +222,21 @@ const overlay = document.getElementById('overlay');
 const WHATSAPP = '34650678820';
 
 function startExperience(){
-  audio.play();
-  overlay.style.display = 'none';
+  audio.volume = 0.8;
+
+  audio.play().then(() => {
+    overlay.style.display = 'none';
+  }).catch(err => {
+    alert('Toca de nuevo para activar el sonido 🔊');
+    console.log(err);
+  });
 }
 
 function rsvp(ok){
   const msg = ok
     ? 'Hola 😊 Confirmo asistencia al cumpleaños del 25 de enero 🎉'
     : 'Hola, no podremos asistir al cumpleaños 😔';
-  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`);
+  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 </script>
 
