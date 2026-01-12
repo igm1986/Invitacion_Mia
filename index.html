@@ -3,13 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cumpleaños 12 | Hawkins</title>
-
+<title>HAWKINS | Evento Especial</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&display=swap" rel="stylesheet">
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-
 body{
     font-family:'Special Elite',monospace;
     background:#000;
@@ -107,28 +104,37 @@ h1{
     color:#ff1b1b;
     text-shadow:0 0 30px red;
 }
+.subtitle{
+    margin-top:6px;
+    font-size:.9em;
+    letter-spacing:4px;
+    color:#ff1b1b;
+    text-shadow:0 0 15px red;
+}
+.subject{
+    margin-top:6px;
+    font-size:.8em;
+    letter-spacing:3px;
+    color:#aaa;
+}
 
-/* FOTO */
+/* FOTO VHS */
 .photo{
-    width:220px;
-    height:220px;
+    width:260px;
+    height:180px; /* rectangular */
     margin:16px auto;
-    border-radius:50%;
-    overflow:hidden;
     border:4px solid #ff1b1b;
-    box-shadow:0 0 35px red;
+    box-shadow:0 0 40px red;
+    background:#000;
+    position:relative;
+    overflow:hidden;
 }
 .photo img{
     width:100%;
     height:100%;
-    object-fit:cover;
-    filter:contrast(1.3) brightness(.9);
-    animation:glitch 3s infinite;
-}
-@keyframes glitch{
-    0%,100%{transform:translateX(0);}
-    10%{transform:translateX(-4px);}
-    20%{transform:translateX(4px);}
+    object-fit:contain;
+    background:#000;
+    filter:contrast(1.15) brightness(.95);
 }
 
 /* EDAD */
@@ -178,7 +184,6 @@ button{
 </head>
 
 <body>
-
 <div class="fog"></div>
 <div class="lightning"></div>
 
@@ -196,7 +201,9 @@ button{
 </div>
 
 <div class="card">
-  <h1>CUMPLEAÑOS</h1>
+  <h1>HAWKINS</h1>
+  <div class="subtitle">EVENTO ESPECIAL</div>
+  <div class="subject">SUJETO 12</div>
 
   <div class="photo">
     <img src="https://i.imgur.com/BoW4jwb.jpg" alt="Cumpleañera">
@@ -207,7 +214,7 @@ button{
   <div class="info">
     <p><strong>FECHA:</strong> 25 Enero 2025</p>
     <p><strong>HORA:</strong> 16:30</p>
-    <p><strong>LUGAR:</strong> Diver Jump</p>
+    <p><strong>LUGAR:</strong> Diver Jump – Carballo</p>
   </div>
 
   <button class="yes" onclick="rsvp(true)">CONFIRMO ASISTENCIA</button>
@@ -222,11 +229,21 @@ const overlay = document.getElementById('overlay');
 const WHATSAPP = '34650678820';
 
 function startExperience(){
-  audio.volume = 0.8;
-
+  overlay.style.display = 'none';
+  audio.volume = 0;
   audio.play().then(() => {
-    overlay.style.display = 'none';
-  }).catch(err => {
+    let fadeVol = 0;
+    const fadeDuration = 3; // segundos
+    const intervalTime = 50; // ms
+    const step = intervalTime / (fadeDuration*1000);
+    const fadeInterval = setInterval(()=>{
+      if(audio.volume < 0.8){
+        audio.volume = Math.min(audio.volume + step, 0.8);
+      } else {
+        clearInterval(fadeInterval);
+      }
+    }, intervalTime);
+  }).catch(err=>{
     alert('Toca de nuevo para activar el sonido 🔊');
     console.log(err);
   });
